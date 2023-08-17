@@ -1,0 +1,56 @@
+#include<stdio.h>
+#define MAX 9999
+int stages, n, min, i, j, c[30][30], cost[30], d[30], path[30];
+void read()
+{
+printf("\nEnter Number of vertices : ");
+scanf("%d", &n);
+printf("\nEnter Number of stages : ");
+scanf("%d", &stages);
+printf("\nEnter the cost in the Adjacency Matrix : \n");
+for(i = 1 ; i <= n ; i++)
+{
+for(j = 1 ; j <= n ; j++)
+{
+scanf("%d", &c[i][j]);
+}
+}
+}
+void Multi_Stage_Graph()
+{
+cost[n] = 0;
+for(i = n - 1 ; i >= 1 ; i--)
+{
+min = MAX;
+for(j = i + 1 ; j <= n ; j++)
+{
+if(c[i][j] != 0 && c[i][j] + cost[j] < min)
+{
+min = c[i][j] + cost[j];
+d[i] = j;
+}
+}
+cost[i] = min;
+}
+}
+void Multi_Stage_Graph_Path()
+{
+path[1] = 1, path[stages] = n;
+for(i = 2 ; i < stages ; i++)
+{
+path[i] = d[ path[i - 1] ];
+}
+printf("\nThe Shortest Path : ");
+for(i = 1 ; i < stages ; i++)
+{
+printf("%d -> ", path[i]);
+}
+printf("%d", path[i]);
+printf("\nThe Shortest Path value = %d ", cost[1]);
+}
+void main()
+{
+read();
+Multi_Stage_Graph();
+Multi_Stage_Graph_Path();
+}
