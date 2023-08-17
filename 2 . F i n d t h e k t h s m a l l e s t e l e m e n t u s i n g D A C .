@@ -1,0 +1,59 @@
+#include <stdio.h>
+void read(int a[], int n) {
+int i;
+for(i=0 ; i <n ; i++)
+{
+printf("\nEnter a[%d] : ",i);
+scanf("%d",&a[i]);
+}
+}
+int partition(int a[], int lb, int ub) {
+int lower= lb, upper= ub, t;
+int pivot= a[lb];
+while(lb< ub)
+{
+while(lb< upper && a[lb] <= pivot)
+lb++;
+while(ub> lower && a[ub] >= pivot)
+ub--;
+if(lb< ub)
+{
+t= a[lb];
+a[lb]= a[ub];
+a[ub]= t;
+}
+}
+a[lower]= a[ub];
+a[ub]= pivot;
+return ub;
+}
+int kthSmallest(int arr[], int lb, int ub, int k) {
+int j;
+if(lb == ub) {
+if(lb ==k- 1)
+return arr[k- 1];
+else
+return;
+}
+else
+{
+j = partition(arr, lb, ub);
+if(j == k - 1)
+return arr[k - 1];
+else if(j < k - 1)
+return kthSmallest(arr, j + 1, ub, k);
+else
+return kthSmallest(arr, lb, j - 1, k);
+}
+}
+void main()
+{
+int i, n, k, a[100], kth_SmallestElement;
+printf("\nEnter number of elements : ");
+scanf("%d", &n);
+read(a, n);
+printf("\nEnter K'th element : ");
+scanf("%d", &k);
+kth_SmallestElement = kthSmallest(a, 0, n -1 , k);
+printf("\nThe K'th Smallest element = %d ", kth_SmallestElement);
+}
