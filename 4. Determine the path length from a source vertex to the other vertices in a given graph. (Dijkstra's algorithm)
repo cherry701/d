@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<conio.h>
+#define INFINITY 9999
+#define MAX 25
+int n, i, j, count, min_distance, start_node, next_node;
+int adj[MAX][MAX], distance[MAX], visited[MAX], path[MAX];
+void Find_Dijkstras()
+{
+for(i = 0 ; i < n ; i++)
+{
+distance[i] = adj[start_node][i];
+path[i] = start_node;
+visited[i] = 0;
+}
+distance[start_node] = 0;
+visited[start_node] = 1;
+count = 1;
+while(count < n - 1)
+{
+min_distance = INFINITY;
+for(i = 0 ; i < n ; i++)
+{
+if(distance[i] < min_distance && !visited[i])
+{
+min_distance = distance[i];
+next_node = i;
+}
+}
+visited[next_node] = 1;
+for(i = 0 ; i < n ; i++)
+{
+if(!visited[i])
+{
+if(min_distance + adj[next_node][i] < distance[i])
+{
+distance[i] = min_distance + adj[next_node][i];
+path[i] = next_node;
+}
+}
+}
+count++;
+}
+for(i = 0 ; i < n ; i++)
+{
+if(i != start_node && distance[i] != INFINITY)
+8
+{
+printf("\nDistance of %d = %d", i, distance[i]);
+printf("\nPath = %d", i);
+j = i;
+do
+{
+j = path[j];
+printf(" <- %d", j);
+}while(j != start_node);
+}
+}
+}
+void main()
+{
+printf("\nEnter Number of vertices : ");
+scanf("%d", &n);
+printf("\nEnter the cost in the Adjacency Matrix : \n");
+for(i = 0 ; i < n ; i++)
+{
+for(j = 0 ; j < n ; j++)
+{
+scanf("%d", &adj[i][j]);
+if(adj[i][j] == 0)
+adj[i][j] = INFINITY;
+}
+}
+printf("\nEnter the Source node : ");
+scanf("%d", &start_node);
+printf("\nThe edges of the Minimum Cost Spanning Tree are : \n");
+Find_Dijkstras();
+}
