@@ -1,0 +1,64 @@
+#include<stdio.h>
+#define INF 9999
+int n, c[30][30], d[30][30], i, j, k;
+void read()
+{
+printf("\nEnter Number of vertices : ");
+scanf("%d", &n);
+printf("\nEnter the cost in the Adjacency Matrix : \n{ If there is no Self loop :- 0 & If
+there is no edge :- (-1) }\n");
+for(i = 1 ; i <= n ; i++)
+{
+for(j = 1 ; j <= n ; j++)
+{
+scanf("%d", &c[i][j]);
+d[i][j] = c[i][j];
+if(c[i][j] == -1)
+{
+d[i][j] = c[i][j] = INF;
+}
+}
+}
+}
+int min(int a, int b)
+{
+return ( (a < b) ? a : b );
+}
+void All_Pairs_Shortest_Path()
+{
+for(k = 1 ; k <= n ; k++)
+{
+for(i = 1 ; i <= n ; i++)
+{
+for(j = 1 ; j <= n ; j++)
+{
+d[i][j] = min( d[i][j], d[i][k] + d[k][j] );
+}
+}
+}
+}
+void display()
+{
+printf("\nThe Resultant Matrix : \n");
+for(i = 1 ; i <= n ; i++)
+{
+for(j = 1 ; j <= n ; j++)
+{
+if(j != 1)
+{
+printf("%7d", d[i][j]);
+}
+else
+{
+printf("%d", d[i][j]);
+}
+}
+printf("\n");
+}
+}
+void main()
+{
+read();
+All_Pairs_Shortest_Path();
+display();
+}
