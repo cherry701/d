@@ -1,0 +1,74 @@
+#include<stdio.h>
+int n, graph[30][30];
+void read()
+{
+int i, j;
+printf("\nEnter Number of vertices : ");
+scanf("%d", &n);
+printf("\nEnter the Adjacency Matrix : \n");
+for(i = 0 ; i < n ; i++)
+{
+for(j = 0 ; j < n ; j++)
+{
+scanf("%d", &graph[i][j]);
+}
+}
+}
+void print(int color[])
+{
+printf("\nSolution exists \nFollowing are the assigned colors : \n");
+for(int i = 0 ; i < n ; i++)
+{
+printf("%d ", color[i]);
+}
+}
+// Check if the Colored, Graph is safe or not
+int isSafe(int color[]) {
+// check for every edge
+for (int i = 0; i < n; i++)
+for (intj= i + 1;j< n; j++)
+if (graph[i][j] && color[j] == color[i])
+return 0;
+return 1;
+}
+int Graph_Coloring(int m, int i, int color[n]) {
+// if current index reached end
+if(i == n) {
+// if coloring is safe
+if( isSafe(color)
+)
+{
+print(color);
+return 1;
+}
+return 0;
+}
+// Assign each color from
+1 to m
+for(intj=1 ; j <=m ; j++)
+{
+color[i]= j;
+// Recur of the rest vertices
+if
+( Graph_Coloring(m, i + 1, color))
+return 1;
+color[i]= 0;
+}
+return 0;
+}
+void main() {
+read();
+int color[n], m, i, j;
+printf("\nEnter Number of colors to be assigned : ");
+scanf("%d", &m);
+// Initialize all color values as
+0
+for(i=0 ; i <n ; i++)
+{
+color[i]= 0;
+}
+if( !Graph_Coloring(m, 0, color) )
+{
+printf("\nSolution does not exists");
+}
+}
